@@ -4,7 +4,7 @@ export default function TOC() {
     return (
       <ul>
         <li>
-          <a href="https://github.com/Gloaming02?tab=repositories" 
+          <a href="https://github.com/Gloaming02/kambaz-react-web-app" 
             id="wd-github">Code Repository</a>
         </li>
         <li><Link to="/Labs">Labs</Link></li>
