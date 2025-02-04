@@ -1,102 +1,128 @@
-export default function AssignmentEditor() {
-    return (
-      <div id="wd-assignments-editor">
-        <label htmlFor="wd-name">        
-            <h4>Assignment Name</h4>
-        </label>
-        <input id="wd-name" value="A1 - ENV + HTML" /><br /><br />
-        <textarea id="wd-description" rows={15} cols={52} >
-          The assignment is available online Submit a link to the landing page of
-        </textarea>
-        <br />
-        <br />
-        <table>
-          <tr>
-            <td align="right" valign="top">
-              <label htmlFor="wd-points">Points </label>
-            </td>
-            <td>
-              <input id="wd-points" value={100} />
-            </td>
-          </tr>
-          <br />
-          <tr>
-            <td align="right" valign="top">
-              <label  htmlFor="wd-group">Assignment Group </label>
-            </td>
-            <td>
-                <select id="wd-group">
-                <option selected value="ASSIGNMENTS">ASSIGNMENTS</option>
-                <option value="EXAM">EXAM</option>
-                </select>
-            </td>
-          </tr>
-          <br />
-          <tr>
-            <td align="right" valign="top">
-              <label htmlFor="wd-display-grade-as">Display Grade as </label>
-            </td>
-            <td>
-                <select id="wd-display-grade-as">
-                <option selected value="PERCENTAGE">Percentage</option>
-                <option value="POINTS">POINTS</option>
-                </select>
-            </td>
-          </tr>
-          <br />
-          <tr>
-            <td align="right" valign="top">
-              <label htmlFor="wd-submission-type">Submission Type </label>
-            </td>
-            <td>
-                <select id="wd-submission-type">
-                <option selected value="ONLINE">Online</option>
-                <option value="INPERSON">In-Person</option>
-                </select><br/><br/>
-                <label>Online Entry Options</label><br/>
-                <input type="checkbox" name="entry-options" id="wd-text-entry"/>
-                <label htmlFor="wd-text-entry">Text Entry</label><br/>
-                <input type="checkbox" name="entry-options" id="wd-website-url"/>
-                <label htmlFor="wd-website-url">Website URL</label><br/>
-                <input type="checkbox" name="entry-options" id="wd-media-recordings"/>
-                <label htmlFor="wd-media-recordings">Media Recordings</label><br/>
-                <input type="checkbox" name="entry-options" id="wd-student-annotation"/>
-                <label htmlFor="wd-student-annotation">Student Annotation</label><br/>
-                <input type="checkbox" name="entry-options" id="wd-file-upload"/>
-                <label htmlFor="wd-file-upload">File Uploads</label>
-            </td>
-          </tr>
-          <br/>
-          <tr>
-            <td align="right" valign="top">
-              <label>Assign </label>
-            </td>
-            <td>
-                <label htmlFor="wd-assign-to">Assign to </label><br />
-                <input id="wd-assign-to" value="Everyone" /><br /><br />
-                <label htmlFor="wd-due-date"> Due </label><br/>
-                <input type="date" value="2024-05-13" id="wd-due-date"/><br/><br/>
-                <table>
-                    <tr>
-                        <td>
-                        <label htmlFor="wd-available-from"> Available from </label><br/>
-                        <input type="date" value="2024-05-06" id="wd-available-from"/><br/><br/>
-                        </td>
-                        <td>
-                        <label htmlFor="wd-available-until"> Until </label><br/>
-                        <input type="date" value="2024-05-20" id="wd-available-until"/><br/><br/>
-                        </td>
-                    </tr>
-                </table>
-            </td>
-          </tr>
+import Select from 'react-select';
+import { Form, Button, Row, Col } from 'react-bootstrap';
+import { useState } from 'react';
 
-        </table>
-        <hr />
-        <div style={{ textAlign: 'right' }}>
-            <button className="btn btn-cancel">Cancel</button>
-            <button className="btn btn-save">Save</button>
-        </div><br/><br/>
-      </div>
-  );}
+export default function AssignmentEditor() {
+  const [selectedOptions, setSelectedOptions] = useState([{ value: 'everyone', label: 'Everyone' }]);
+  const options = [
+    { value: 'everyone', label: 'Everyone' },
+    { value: 'group1', label: 'Group 1' },
+    { value: 'group2', label: 'Group 2' },
+    { value: 'individual', label: 'Individual' }
+  ];
+  const handleChange = (selected: any) => {
+    setSelectedOptions(selected || []); 
+  };
   
+
+  return (
+    <div id="wd-assignments-editor" className="p-4">
+      <Form>
+        <Form.Group controlId="wd-name" className="mb-4">
+          <Form.Label>Assignment Name</Form.Label>
+          <Form.Control type="text" defaultValue="A1 - ENV + HTML" />
+        </Form.Group>
+
+        <Form.Group controlId="wd-description" className="mb-4">
+          <Form.Label>Description</Form.Label>
+          <Form.Control 
+            as="textarea" 
+            rows={10} 
+            defaultValue={`The assignment is available online. Submit a link to the landing page of your Web application running on Netlify.\n\nThe landing page should include the following:\n- Your full name and section\n- Links to each of the lab assignments\n- Link to the Kanbas application\n- Links to all relevant source code repositories\n\nThe Kanbas application should include a link to navigate back to the landing page.`}
+          />
+        </Form.Group>
+
+        <Row className="mb-4 align-items-center">
+          <Col xs={4} className="text-end pe-0"> 
+            <Form.Label className="mb-0">Points</Form.Label>
+          </Col>
+          <Col xs={8}>
+            <Form.Control type="text" defaultValue="100" />
+          </Col>
+        </Row>
+
+        <Row className="mb-4 align-items-center">
+          <Col xs={4} className="text-end pe-0"> 
+            <Form.Label className="mb-0">Assignment Group</Form.Label>
+          </Col>
+          <Col xs={8}>
+            <Form.Control as="select" defaultValue="ASSIGNMENTS">
+              <option value="ASSIGNMENTS">ASSIGNMENTS</option>
+              <option value="EXAM">EXAM</option>
+            </Form.Control>
+          </Col>
+        </Row>
+
+        <Row className="mb-4 align-items-center">
+          <Col xs={4} className="text-end pe-0"> 
+            <Form.Label className="mb-0">Display Grade as</Form.Label>
+          </Col>
+          <Col xs={8}>
+            <Form.Control as="select" defaultValue="PERCENTAGE">
+              <option value="PERCENTAGE">Percentage</option>
+              <option value="POINTS">Points</option>
+            </Form.Control>
+          </Col>
+        </Row>
+
+        <Row className="mb-4 align-items-start">
+          <Col xs={4} className="text-end pe-0"> 
+            <Form.Label className="mb-0">Submission Type</Form.Label>
+          </Col>
+          <Col xs={8}>
+            <Form.Group className="p-3 mb-3 border rounded">
+              <Form.Control as="select" defaultValue="ONLINE" >
+                <option value="ONLINE">Online</option>
+                <option value="INPERSON">In-Person</option>
+              </Form.Control>
+              <Form.Group className="mb-3 mt-3">
+                <Form.Label className="mb-3"><strong>Online Entry Options</strong></Form.Label>
+                <Form.Check type="checkbox" label="Text Entry" className="mb-3" />
+                <Form.Check type="checkbox" label="Website URL" defaultChecked className="mb-3" />
+                <Form.Check type="checkbox" label="Media Recordings" className="mb-3" />
+                <Form.Check type="checkbox" label="Student Annotation" className="mb-3" />
+                <Form.Check type="checkbox" label="File Uploads" className="mb-3" />
+              </Form.Group>
+            </Form.Group>
+          </Col>
+        </Row>
+
+        <Row className="mb-4 align-items-start">
+          <Col xs={4} className="text-end pe-0"> 
+            <Form.Label className="mb-0">Assign</Form.Label>
+          </Col>
+          <Col xs={8}>
+            <Form.Group className="p-3 mb-3 border rounded">
+              <Form.Group className="mb-3">
+                <Form.Label className="mb-3"><strong>Assign to</strong></Form.Label>
+                <Select isMulti value={selectedOptions} onChange={handleChange}
+                  options={options} placeholder="Select..." classNamePrefix="react-select"/>
+              </Form.Group>
+              <Form.Group className="mb-3">
+                <Form.Label><strong>Due</strong></Form.Label>
+                <Form.Control type="datetime-local" defaultValue="2024-05-13T23:59" />
+              </Form.Group>
+              <Row className="mb-3">
+                <Col md={6}>
+                  <Form.Label><strong>Available from</strong></Form.Label>
+                  <Form.Control type="datetime-local" defaultValue="2024-05-06T00:00" />
+                </Col>
+                <Col md={6}>
+                  <Form.Label><strong>Until</strong></Form.Label>
+                  <Form.Control type="datetime-local" defaultValue="2024-05-20T23:59" />
+                </Col>
+              </Row>
+            </Form.Group>
+          </Col>
+        </Row>
+
+        {/* Buttons */}
+        <hr />
+        <div className="d-flex justify-content-end">
+          <Button variant="secondary" className="me-2">Cancel</Button>
+          <Button variant="danger">Save</Button>
+        </div>
+      </Form>
+    </div>
+  );
+}
