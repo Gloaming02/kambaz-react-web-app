@@ -36,7 +36,7 @@ import Nav from "react-bootstrap/Nav";
         <Nav.Link href="#/Kambaz">Kambaz</Nav.Link>
       </Nav.Item>
       <Nav.Item>
-        <Nav.Link href="https://github.com/Gloaming02/">My GitHub</Nav.Link>
+        <Nav.Link href="https://github.com/Gloaming02">My GitHub</Nav.Link>
       </Nav.Item>
       <Nav.Item>
         <Nav.Link href="https://github.com/Gloaming02/kambaz-react-web-app">Code Repository</Nav.Link>
