@@ -7,12 +7,22 @@ import AssignmentEditor from "./Assignments/Editor";
 import PeopleTable from "./People/Table";
 
 import { FaAlignJustify } from 'react-icons/fa';
-import { courses } from "../Database";
+import { useSelector } from "react-redux";
 
-export default function Courses() {
+export default function Courses({ courses }: { courses: any[]; }) {
   const { cid } = useParams();
   const { pathname } = useLocation();
+  const { currentUser } = useSelector((state: any) => state.accountReducer);
+  const enrollments = useSelector((state: any) => state.enrollmentsReducer.enrollments);
+
   const course = courses.find((course) => course._id === cid);
+  const studentId = currentUser._id;
+
+  const isEnrolled = enrollments.some((e: any) => e.user === studentId && e.course === cid);
+  if (currentUser.role === "STUDENT" && !isEnrolled) {
+    return (<Navigate to="/Kambaz/Dashboard" />);
+  }
+
   return (
     <div id="wd-courses">
       <h2 className="text-danger">

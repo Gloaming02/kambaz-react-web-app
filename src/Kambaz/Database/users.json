@@ -14,6 +14,34 @@
       "totalActivity": "10:21:32"
     },
     {
+      "_id": "999",
+      "username": "iron_man1",
+      "password": "1234",
+      "firstName": "Zhengyan",
+      "lastName": "Hu",
+      "email": "Zhengyan@Hu.com",
+      "dob": "1970-05-29T00:00:00.000Z",
+      "role": "FACULTY",
+      "loginId": "002594561S",
+      "section": "S101",
+      "lastActivity": "2020-10-01",
+      "totalActivity": "10:21:32"
+    },
+    {
+      "_id": "123",
+      "username": "iron_man2",
+      "password": "1234",
+      "firstName": "Zhengyan",
+      "lastName": "Hu",
+      "email": "Zhengyan@Hu.com",
+      "dob": "1970-05-29T00:00:00.000Z",
+      "role": "STUDENT",
+      "loginId": "002594561S",
+      "section": "S101",
+      "lastActivity": "2020-10-01",
+      "totalActivity": "10:21:32"
+    },
+    {
       "_id": "234",
       "username": "dark_knight",
       "password": "wayne123",

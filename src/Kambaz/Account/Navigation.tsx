@@ -1,13 +1,16 @@
-import { Link } from "react-router-dom";
-import { useState } from "react"; 
+import { Link, useLocation } from "react-router-dom";
+import { useEffect, useState } from "react"; 
+import { useSelector } from "react-redux";
 
 export default function AccountNavigation() {
-  const [activeLink, setActiveLink] = useState('/Kambaz/Account/Signin');
+  const { currentUser } = useSelector((state: any) => state.accountReducer);
+  const links = currentUser ? ["Profile"] : ["Signin", "Signup"];
+  const location = useLocation(); 
 
+  const [activeLink, setActiveLink] = useState(location.pathname); 
   const handleLinkClick = (link: string) => {
     setActiveLink(link);
   };
-
   return (
     <div id="wd-account-navigation" className="wd list-group fs-5 rounded-0">
       <Link to="/Kambaz/Account/Signin" id="wd-signin-link"
@@ -22,7 +25,7 @@ export default function AccountNavigation() {
         Signup
       </Link>
       <Link to="/Kambaz/Account/Profile" id="wd-profile-link"
-        className={`list-group-item ${activeLink === '/Kambaz/Account/SiProfilegnin' ? 'active' : 'text-danger'} border-0`} 
+        className={`list-group-item ${activeLink === '/Kambaz/Account/Profile' ? 'active' : 'text-danger'} border-0`} 
         onClick={() => handleLinkClick('/Kambaz/Account/Profile')}>
         Profile
       </Link>
