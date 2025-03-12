@@ -1,10 +1,10 @@
 import { Link, useLocation } from "react-router-dom";
-import { useEffect, useState } from "react"; 
-import { useSelector } from "react-redux";
+import { useState } from "react"; 
+// import { useSelector } from "react-redux";
 
 export default function AccountNavigation() {
-  const { currentUser } = useSelector((state: any) => state.accountReducer);
-  const links = currentUser ? ["Profile"] : ["Signin", "Signup"];
+  // const { currentUser } = useSelector((state: any) => state.accountReducer);
+  // const links = currentUser ? ["Profile"] : ["Signin", "Signup"];
   const location = useLocation(); 
 
   const [activeLink, setActiveLink] = useState(location.pathname); 
