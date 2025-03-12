@@ -1,22 +1,11 @@
-// import { ListGroup } from "react-bootstrap";
-// import { BsGripVertical } from "react-icons/bs";
-// import { MdAssignment } from "react-icons/md";
-// import { RxTriangleDown } from "react-icons/rx";
-// import { useParams, Link } from "react-router-dom";
-// import AssignmentsButtons from "./AssignmentsButtons";
-// import AssignmentControlButton from "./AssignmentControlButton";
-// import GroupButton from "./GroupButton";
-// import * as db from "../../Database"; 
-
 import { ListGroup } from "react-bootstrap";
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { MdAssignment } from "react-icons/md";
 import AssignmentsButtons from "./AssignmentsButtons";
 import AssignmentControlButton from "./AssignmentControlButton";
 import GroupButton from "./GroupButton";
 
-import { addAssignment, deleteAssignment, updateAssignment, editAssignment }
-  from "./reducer";
+import { deleteAssignment } from "./reducer";
 import { useSelector, useDispatch } from "react-redux";
 import { BsGripVertical } from "react-icons/bs";
 import { RxTriangleDown } from "react-icons/rx";

@@ -11,7 +11,7 @@ export default function ModuleControlButtons(
   deleteModule: (moduleId: string) => void;
   editModule: (moduleId: string) => void;
 }) {
-  const { currentUser } = useSelector((state: any) => state.accountReducer); // ✅ 获取 Redux 里的 currentUser
+  const { currentUser } = useSelector((state: any) => state.accountReducer); 
 
   return (
     <div className="float-end">

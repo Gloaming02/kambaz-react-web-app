@@ -12,29 +12,7 @@ import { addCourse, editCourse, updateCourse, deleteCourse }
 import { useSelector, useDispatch } from "react-redux";
 
 export default function Kambaz() {
-  // const dispatch = useDispatch();
   const courses = useSelector((state: any) => state.courseReducer.courses); 
-
-  // const addNewCourse = () => {
-  //   dispatch(addCourse({
-  //     _id: uuidv4(), 
-  //     name: "New Course",
-  //     number: "New Number",
-  //     startDate: "2023-09-10",
-  //     endDate: "2023-12-15",
-  //     department: "D000",
-  //     credits: 3,
-  //     description: "New Course Description",
-  //   }));
-  // };
-  // const removeCourse = (courseId: string) => {
-  //   dispatch(deleteCourse(courseId));
-  // };
-
-  // const modifyCourse = (updatedCourse: any) => {
-  //   dispatch(updateCourse(updatedCourse));
-  // };
-
   return (
     <div id="wd-kambaz">
       <KambazNavigation />
@@ -46,10 +24,7 @@ export default function Kambaz() {
               <ProtectedRoute>              
                 <Dashboard
                   courses={courses}
-                  // addNewCourse={addNewCourse}
-                  // deleteCourse={removeCourse}
-                  // updateCourse={modifyCourse}
-                  // setCourse={(courseId) => dispatch(editCourse(courseId))}
+
                   />
               </ProtectedRoute>
               } />

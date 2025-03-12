@@ -2,10 +2,8 @@ import { Link } from "react-router-dom";
 import { Row, Col, Card, Button, FormControl } from 'react-bootstrap';
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
-import { addCourse, editCourse, updateCourse, deleteCourse } 
-        from "./Courses/reducer";
-import { enroll, unenroll, updateEnrollment, editEnrollment } 
-        from "./enrollmentsReducer";
+import { addCourse, updateCourse, deleteCourse } from "./Courses/reducer";
+import { enroll, unenroll } from "./enrollmentsReducer";
 
 export default function Dashboard({ courses }: { courses: any[]; }) {
     const dispatch = useDispatch();
@@ -28,10 +26,6 @@ export default function Dashboard({ courses }: { courses: any[]; }) {
       description: "New Course Description",
   });
 
-  const handleEditCourse = (course: any) => {
-    setSelectedCourse(course);
-  };
-
   const handleSaveCourse = () => {
     if (selectedCourse._id) {
         dispatch(updateCourse(selectedCourse));
@@ -49,16 +43,6 @@ export default function Dashboard({ courses }: { courses: any[]; }) {
       description: "New Course Description",
   });;
 };
-    // const filteredCourses = courses
-    // .filter(
-    //   (course) =>
-    //   enrollments.some(
-    //     (enrollment:any) =>
-    //       enrollment.user === currentUser._id &&
-    //       enrollment.course === course._id
-    //   )
-    // );
-
     const filteredCourses = showAllCourses ? courses
     : courses.filter((course) =>
         enrollments.some((enrollment: any) =>
