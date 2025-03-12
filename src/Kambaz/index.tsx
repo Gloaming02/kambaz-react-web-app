@@ -4,12 +4,8 @@ import Dashboard from "./Dashboard";
 import KambazNavigation from "./Navigation";
 import Courses from "./Courses";
 import "./styles.css";
-import { useEffect, useState } from "react";
-import { v4 as uuidv4 } from "uuid";
 import ProtectedRoute from "./Account/ProtectedRoute";
-import { addCourse, editCourse, updateCourse, deleteCourse } 
-        from "./Courses/reducer";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 export default function Kambaz() {
   const courses = useSelector((state: any) => state.courseReducer.courses); 
