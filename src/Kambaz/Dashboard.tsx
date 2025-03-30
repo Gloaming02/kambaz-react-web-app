@@ -1,16 +1,45 @@
 import { Link } from "react-router-dom";
 import { Row, Col, Card, Button, FormControl } from 'react-bootstrap';
-import { useDispatch, useSelector } from "react-redux";
-import { useState } from "react";
-import { addCourse, updateCourse, deleteCourse } from "./Courses/reducer";
-import { enroll, unenroll } from "./enrollmentsReducer";
+import {useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+// import { addCourse, updateCourse, deleteCourse } from "./Courses/reducer";
+// import { enroll, unenroll } from "./enrollmentsReducer";
+import * as enrollmentsClient from "./enrollmentsClient";
 
-export default function Dashboard({ courses }: { courses: any[]; }) {
-    const dispatch = useDispatch();
+export default function Dashboard({
+    courses,
+    addCourse,
+    updateCourse,
+    deleteCourse,
+    fetchAllCourses
+  }: {
+    courses: any[];
+    addCourse: (course: any) => void;
+    updateCourse: (course: any) => void;
+    deleteCourse: (courseId: string) => void;
+    fetchAllCourses: () => Promise<void>;
+  }) {
+
+    // const dispatch = useDispatch();
     const { currentUser } = useSelector((state: any) => state.accountReducer);
-    const enrollments = useSelector((state: any) => state.enrollmentsReducer.enrollments);
+    // const enrollments = useSelector((state: any) => state.enrollmentsReducer.enrollments);
     // const studentId = currentUser._id;
     const [showAllCourses, setShowAllCourses] = useState(false);
+    const [enrollments, setEnrollments] = useState<any[]>([]);
+
+    useEffect(() => {
+      const fetchEnrollments = async () => {
+        try {
+          const data = await enrollmentsClient.findMyEnrollments(); 
+          setEnrollments(data);
+        } catch (e) {
+          console.error("Error loading enrollments", e);
+        }
+      };
+      fetchAllCourses(); 
+      fetchEnrollments();
+    }, [currentUser]);
+
 
     const studentId = currentUser._id;
     const isStudent = currentUser.role === "STUDENT";
@@ -26,11 +55,15 @@ export default function Dashboard({ courses }: { courses: any[]; }) {
       description: "New Course Description",
   });
 
-  const handleSaveCourse = () => {
+  const handleSaveCourse = async () => {
     if (selectedCourse._id) {
-        dispatch(updateCourse(selectedCourse));
+      updateCourse(selectedCourse);
     } else {
-        dispatch(addCourse(selectedCourse));
+      const newCourse = await addCourse(selectedCourse);
+      await fetchAllCourses();
+      const updatedEnrollments = await enrollmentsClient.findMyEnrollments();
+      setEnrollments(updatedEnrollments);
+      console.log(newCourse);
     }
     setSelectedCourse({
       _id: "",
@@ -55,9 +88,19 @@ export default function Dashboard({ courses }: { courses: any[]; }) {
     <div id="wd-dashboard">
       <h1 id="wd-dashboard-title">Dashboard</h1> <hr />
         {isStudent && (
-          <button className="btn btn-primary float-end" onClick={() => setShowAllCourses(!showAllCourses)}>
-              {showAllCourses ? "Show My Courses" : "Show All Courses"}
-          </button>
+          // <button className="btn btn-primary float-end" onClick={() => setShowAllCourses(!showAllCourses)}>
+          //     {showAllCourses ? "Show My Courses" : "Show All Courses"}
+          // </button>
+          <button
+          className="btn btn-primary float-end"
+          onClick={async () => {
+            const newShowAll = !showAllCourses;
+            setShowAllCourses(newShowAll);
+            await fetchAllCourses();
+          }}
+        >
+          {showAllCourses ? "Show My Courses" : "Show All Courses"}
+        </button>
       )}
       {currentUser.role === "FACULTY" && (
         <>
@@ -104,8 +147,8 @@ export default function Dashboard({ courses }: { courses: any[]; }) {
                       <>
                       <button onClick={(event) => {
                         event.preventDefault();
-                        dispatch(deleteCourse(course._id));
-                        }
+                        deleteCourse(course._id);
+                      }
                       } 
                         className="btn btn-danger float-end"
                         id="wd-delete-course-click">
@@ -125,13 +168,15 @@ export default function Dashboard({ courses }: { courses: any[]; }) {
 
                     {currentUser.role === "STUDENT" && (
                       <>
-                        <button onClick={(event) => {
+                        <button onClick={async (event) => {
                           event.preventDefault();
                           if (isEnrolled) {
-                              dispatch(unenroll({ user: studentId, course: course._id }));
+                            await enrollmentsClient.unenroll(studentId, course._id);
                           } else {
-                              dispatch(enroll({ user: studentId, course: course._id }));
+                            await enrollmentsClient.enroll(studentId, course._id);
                           }
+                          const updated = await enrollmentsClient.findMyEnrollments();
+                          setEnrollments(updated);
                         }}
                           className={`btn float-end ${isEnrolled ? "btn-danger" : "btn-success"}`}
                           id="wd-enroll-course-click">

@@ -5,22 +5,41 @@ import AssignmentsButtons from "./AssignmentsButtons";
 import AssignmentControlButton from "./AssignmentControlButton";
 import GroupButton from "./GroupButton";
 
-import { deleteAssignment } from "./reducer";
+import { setAssignments, deleteAssignment } from "./reducer";
 import { useSelector, useDispatch } from "react-redux";
 import { BsGripVertical } from "react-icons/bs";
 import { RxTriangleDown } from "react-icons/rx";
 import { useNavigate } from "react-router-dom";
+import * as coursesClient from "../client";
+import * as assignmentsClient from "./client";
+import { useEffect } from "react";
 
 export default function Assignments() {
   const { cid } = useParams(); 
   const { assignments } = useSelector((state: any) => state.assignmentsReducer);
+  const fetchAssignments = async () => {
+    const assignments = await coursesClient.findAssignmentsForCourse(cid as string);
+    dispatch(setAssignments(assignments));
+  };
+
+  useEffect(() => {
+    fetchAssignments();
+  }, []);
+
+  
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
 
+  const removeAssignment = async (assignmentId: string) => {
+    await assignmentsClient.deleteAssignment(assignmentId);
+    dispatch(deleteAssignment(assignmentId));
+  };
+  
+
   const handleNavigation = (assignmentId: string) => {
     navigate(`/Kambaz/Courses/${cid}/Assignments/${assignmentId}`);
-  };
+  };  
 
   return (
       <div id="wd-assignments" className="container">
@@ -37,7 +56,6 @@ export default function Assignments() {
 
           <ListGroup className="wd-lessons rounded-0">
             {assignments
-                .filter((assignment: any) => assignment.course === cid)
                 .map((assignment:any) => (
               <ListGroup.Item key={assignment._id}
                 className="wd-lesson p-3 ps-1 d-flex align-items-center"
@@ -64,10 +82,7 @@ export default function Assignments() {
                 
                 <div className="ms-auto">
                   <AssignmentsButtons AssignmentId={assignment._id}
-                  deleteAssignment={(AssignmentId) => {
-                    dispatch(deleteAssignment(AssignmentId));
-                  }}
-                  />
+                  deleteAssignment={(AssignmentId) => removeAssignment(AssignmentId)}/>
                 </div>
               </ListGroup.Item>
             ))}
@@ -77,3 +92,4 @@ export default function Assignments() {
     </div>
   );
 }
+

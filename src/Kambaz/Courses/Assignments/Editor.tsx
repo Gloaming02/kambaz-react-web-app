@@ -3,13 +3,16 @@ import { Form, Button, Row, Col } from 'react-bootstrap';
 import { useState } from 'react';
 import { useParams, useNavigate} from "react-router-dom";
 
-import { useDispatch, useSelector } from 'react-redux';
-import { addAssignment, updateAssignment } from "./reducer"; 
+import { useSelector } from 'react-redux';
+// import { addAssignment, updateAssignment } from "./reducer"; 
+
+import * as coursesClient from "../client";
+import * as assignmentsClient from "./client";
 
 export default function AssignmentEditor() {
   const { cid, aid } = useParams(); 
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const { currentUser } = useSelector((state: any) => state.accountReducer);
   const isFaculty = currentUser.role === "FACULTY";  
   const isStudent = currentUser.role === "STUDENT";  
@@ -46,20 +49,11 @@ export default function AssignmentEditor() {
     setSelectedOptions(selected || []); 
   };
 
-  
-  const handleSave = () => {
+  const handleSave = async () => {
     if (isNew) {
-      dispatch(addAssignment({
-        title: assignment.title,
-        course: assignment.course,
-        module: assignment.module,
-        available: assignment.available,
-        due: assignment.due,
-        points: assignment.points,
-        description: assignment.description,
-      }));
+      await coursesClient.createAssignmentForCourse (cid!, assignment);
     } else {
-      dispatch(updateAssignment({ _id: aid, ...assignment }));
+      await assignmentsClient.updateAssignment({ _id: aid, ...assignment });
     }
     navigate(`/Kambaz/Courses/${cid}/Assignments`);
   };
