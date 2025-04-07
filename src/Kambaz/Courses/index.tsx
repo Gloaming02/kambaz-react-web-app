@@ -5,6 +5,7 @@ import Home from "./Home";
 import Assignments from "./Assignments";
 import AssignmentEditor from "./Assignments/Editor";
 import PeopleTable from "./People/Table";
+import Quizzes from "./Quizzes";
 
 import { FaAlignJustify } from 'react-icons/fa';
 import { useSelector } from "react-redux";
@@ -64,6 +65,9 @@ export default function Courses({ courses }: { courses: any[]; }) {
         <Route path="Modules" element={<Modules />} />
         <Route path="Assignments" element={<Assignments />} />
         <Route path="Assignments/:aid" element={<AssignmentEditor />} />
+        <Route path="Quizzes" element={<Quizzes />} />
+        {/* <Route path="Quizzes/:aid" element={<AssignmentEditor />} /> */}
+
         <Route path="People" element={<PeopleTable />} />
         </Routes>
       </div>
