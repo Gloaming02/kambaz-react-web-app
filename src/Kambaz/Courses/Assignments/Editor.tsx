@@ -4,7 +4,6 @@ import { useState } from 'react';
 import { useParams, useNavigate} from "react-router-dom";
 
 import { useSelector } from 'react-redux';
-// import { addAssignment, updateAssignment } from "./reducer"; 
 
 import * as coursesClient from "../client";
 import * as assignmentsClient from "./client";
@@ -12,7 +11,6 @@ import * as assignmentsClient from "./client";
 export default function AssignmentEditor() {
   const { cid, aid } = useParams(); 
   const navigate = useNavigate();
-  // const dispatch = useDispatch();
   const { currentUser } = useSelector((state: any) => state.accountReducer);
   const isFaculty = currentUser.role === "FACULTY";  
   const isStudent = currentUser.role === "STUDENT";  
@@ -58,6 +56,12 @@ export default function AssignmentEditor() {
     navigate(`/Kambaz/Courses/${cid}/Assignments`);
   };
 
+  const toInputDate = (dateValue: string | Date) => {
+    if (!dateValue) return "";
+    const date = new Date(dateValue);
+    return date.toISOString().split("T")[0]; 
+  };
+  
   
   return (
     <div id="wd-assignments-editor" className="p-4">
@@ -149,20 +153,20 @@ export default function AssignmentEditor() {
                 <Form.Label>
                   <strong>Due</strong>
                 </Form.Label>
-                <Form.Control type="date" name="due" value={assignment.due} onChange={handleChange} disabled={isStudent}/>
+                <Form.Control type="date" name="due" value={toInputDate(assignment.due)} onChange={handleChange} disabled={isStudent}/>
               </Form.Group>
               <Row className="mb-3">
                 <Col md={6}>
                   <Form.Label>
                     <strong>Available from</strong>
                   </Form.Label>
-                  <Form.Control type="date" name="available" value={assignment.available} onChange={handleChange} disabled={isStudent}/>
+                  <Form.Control type="date" name="available" value={toInputDate(assignment.available)} onChange={handleChange} disabled={isStudent}/>
                 </Col>
                 <Col md={6}>
                   <Form.Label>
                     <strong>Until</strong>
                   </Form.Label>
-                  <Form.Control type="date" name="until" value={assignment.until} onChange={handleChange} disabled={isStudent}/>
+                  <Form.Control type="date" name="until" value={toInputDate(assignment.until)} onChange={handleChange} disabled={isStudent}/>
                 </Col>
               </Row>
             </Form.Group>

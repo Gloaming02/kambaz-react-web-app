@@ -24,7 +24,7 @@ export default function Assignments() {
 
   useEffect(() => {
     fetchAssignments();
-  }, []);
+  }, [cid]);
 
   
   const dispatch = useDispatch();
@@ -41,6 +41,25 @@ export default function Assignments() {
     navigate(`/Kambaz/Courses/${cid}/Assignments/${assignmentId}`);
   };  
 
+
+  function formatToReadableDate(dateString: string): string {
+    const date = new Date(dateString);
+    const monthNames = [
+      "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+      "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+    ];
+    const month = monthNames[date.getMonth()];
+    const day = date.getDate();
+    let hours = date.getHours();
+    const minutes = date.getMinutes();
+    const ampm = hours >= 12 ? "pm" : "am";
+    hours = hours % 12;
+    if (hours === 0) hours = 12;
+    const paddedMinutes = minutes.toString().padStart(2, "0");
+    return `${month} ${day} at ${hours}:${paddedMinutes}${ampm}`;
+  }
+
+  
   return (
       <div id="wd-assignments" className="container">
       <AssignmentControlButton /><br />
@@ -74,8 +93,8 @@ export default function Assignments() {
                     </span>
                     <div style={{ fontSize: "14px" }}>
                       <span className="text-danger">{assignment.module}</span> |
-                      <strong> Not available until</strong> {assignment.available} | <br />
-                      <strong>Due</strong> {assignment.due} | {assignment.points} pts
+                      <strong> Not available until</strong> {formatToReadableDate(assignment.available)} | <br />
+                      <strong>Due</strong> {formatToReadableDate(assignment.due)} | {assignment.points} pts
                     </div>
                   </div>
                 </div>

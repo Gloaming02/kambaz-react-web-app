@@ -3,7 +3,7 @@ const REMOTE_SERVER = import.meta.env.VITE_REMOTE_SERVER;
 const ENROLLMENTS_API = `${REMOTE_SERVER}/api/enrollments`;
 
 export const findMyEnrollments = async () => {
-  const response = await axios.get(`${ENROLLMENTS_API}/user/current`, {
+  const response = await axios.get(`${ENROLLMENTS_API}/users/current`, {
     withCredentials: true,
   });
   return response.data;

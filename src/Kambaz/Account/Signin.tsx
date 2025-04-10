@@ -10,19 +10,30 @@ export default function Signin() {
   const [credentials, setCredentials] = useState<any>({});
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const signin = async () => {
-    const user =  await client.signin(credentials);
 
-    // const user = db.users.find(
-    //   (u: any) => u.username === credentials.username && u.password === credentials.password);
-    if (!user) {
+  // const signin = async () => {
+  //   const user =  await client.signin(credentials);
+  //   if (!user) {
+  //     alert("Invalid username or password");
+  //     return;
+  //   }
+  //   console.log("Logged-in User:", user);
+  //   dispatch(setCurrentUser(user));
+  //   navigate("/Kambaz/Dashboard");
+  // };
+
+  const signin = async () => {
+    try {
+      const user = await client.signin(credentials);
+      dispatch(setCurrentUser(user));
+      navigate("/Kambaz/Dashboard");
+    } catch (err: any) {
+      console.error("Signin failed:", err);
       alert("Invalid username or password");
-      return;
     }
-    console.log("Logged-in User:", user);
-    dispatch(setCurrentUser(user));
-    navigate("/Kambaz/Dashboard");
   };
+
+  
   return (
     <div id="wd-signin-screen">
       <h1>Sign in</h1>

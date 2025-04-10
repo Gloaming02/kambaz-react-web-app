@@ -4,11 +4,11 @@ import { BsGripVertical } from "react-icons/bs";
 import ModuleControlButtons from "./ModuleControlButtons";
 import LessonControlButtons from "./LessonControlButtons";
 import { useEffect, useState } from "react";
-import { setModules,addModule, editModule, updateModule, deleteModule } from "./reducer";
+import { setModules ,addModule, editModule, updateModule, deleteModule } from "./reducer";
 import { useSelector, useDispatch } from "react-redux";
 
 import { useParams } from "react-router";
-import * as coursesClient from "../client";
+import * as courseClient from "../client";
 import * as modulesClient from "./client";
 
 export default function Modules() {
@@ -17,36 +17,63 @@ export default function Modules() {
   const [moduleName, setModuleName] = useState("");
   const { modules } = useSelector((state: any) => state.modulesReducer);
   const dispatch = useDispatch();
+  
+  // const saveModule = async (module: any) => {
+  //   await modulesClient.updateModule(module);
+  //   dispatch(updateModule(module));
+  // };
 
-  const saveModule = async (module: any) => {
-    await modulesClient.updateModule(module);
-    dispatch(updateModule(module));
-  };
-
-
-  const createModuleForCourse = async () => {
-    if (!cid) return;
-    const newModule = { name: moduleName, course: cid };
-    const module = await coursesClient.createModuleForCourse(cid, newModule);
-    dispatch(addModule(module));
-  };
-
-  const fetchModules = async () => {
-    const modules = await coursesClient.findModulesForCourse(cid as string);
+  const fetchModulesForCourse = async () => {
+    const modules = await courseClient.findModulesForCourse(cid!);
+    console.log("📦 Modules fetched for course", cid, "=>", modules); 
     dispatch(setModules(modules));
   };
   useEffect(() => {
-    fetchModules();
-  }, []);
+    fetchModulesForCourse();
+  }, [cid]);
+  
+  const updateModuleHandler = async (module: any) => {
+    await modulesClient.updateModule(module);
+    dispatch(updateModule(module));
+  };
+ 
+  const addModuleHandler = async () => {
+    const newModule = await courseClient.createModuleForCourse(cid!, {
+      name: moduleName,
+      course: cid,
+    });
+    dispatch(addModule(newModule));
+    setModuleName("");
+  };
 
-  const removeModule = async (moduleId: string) => {
+  const deleteModuleHandler = async (moduleId: string) => {
     await modulesClient.deleteModule(moduleId);
     dispatch(deleteModule(moduleId));
   };
+  
+  // const createModuleForCourse = async () => {
+  //   if (!cid) return;
+  //   const newModule = { name: moduleName, course: cid };
+  //   const module = await courseClient.createModuleForCourse(cid, newModule);
+  //   dispatch(addModule(module));
+  // };
+
+  // const fetchModules = async () => {
+  //   const modules = await courseClient.findModulesForCourse(cid as string);
+  //   dispatch(setModules(modules));
+  // };
+  // useEffect(() => {
+  //   fetchModules();
+  // }, []);
+
+  // const removeModule = async (moduleId: string) => {
+  //   await modulesClient.deleteModule(moduleId);
+  //   dispatch(deleteModule(moduleId));
+  // };
 
   return (
   <div className="wd-modules">
-    <ModulesControls setModuleName={setModuleName} moduleName={moduleName} addModule={createModuleForCourse} />
+    <ModulesControls setModuleName={setModuleName} moduleName={moduleName} addModule={addModuleHandler} />
     <br /><br /><br /><br />
     <ListGroup className="rounded-0" id="wd-modules">
     {modules
@@ -64,7 +91,7 @@ export default function Modules() {
             )}
             onKeyDown={(e) => {
               if (e.key === "Enter") {
-                saveModule({ ...module, editing: false });
+                updateModuleHandler({ ...module, editing: false });
               }
             }}
             defaultValue={module.name}/>
@@ -72,10 +99,11 @@ export default function Modules() {
         <ModuleControlButtons
           moduleId={module._id}
           deleteModule={(moduleId) => {
-            removeModule(moduleId);
+            deleteModuleHandler(moduleId);
           }}
           editModule={(moduleId) => dispatch(editModule(moduleId))} />
         </div>
+
         {module.lessons && (
               <ListGroup className="wd-lessons rounded-0">
                 {module.lessons.map((lesson:{ _id: string; name: string }) => (

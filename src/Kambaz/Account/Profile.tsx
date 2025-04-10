@@ -18,6 +18,9 @@ export default function Profile() {
   const updateProfile = async () => {
     const updatedProfile = await client.updateUser(profile);
     dispatch(setCurrentUser(updatedProfile));
+    console.log(updatedProfile);
+    setProfile(updatedProfile);
+    console.log(profile);
   };
 
   const signout = async () => {
@@ -25,7 +28,11 @@ export default function Profile() {
     dispatch(setCurrentUser(null));
     navigate("/Kambaz/Account/Signin");
   };
-  useEffect(() => { fetchProfile(); }, []);
+
+  useEffect(() => {
+    fetchProfile();
+  }, [currentUser]); 
+    
   return (
     <div className="wd-profile-screen">
       <h3>Profile</h3>
@@ -43,7 +50,8 @@ export default function Profile() {
                        onChange={(e) => setProfile({ ...profile, dob: e.target.value })} type="date"/>
           <FormControl defaultValue={profile.email} id="wd-email" className="mb-2"
                        onChange={ (e) => setProfile({ ...profile, email: e.target.value })}/>
-          <select onChange={(e) => setProfile({ ...profile, role:  e.target.value })}
+          <select value={profile.role} 
+                onChange={(e) => setProfile({ ...profile, role:  e.target.value })}
                  className="form-control mb-2" id="wd-role">
             <option value="USER">User</option>            <option value="ADMIN">Admin</option>
             <option value="FACULTY">Faculty</option>      <option value="STUDENT">Student</option>
