@@ -10,7 +10,7 @@ export default function CourseNavigation() {
     <div id="wd-courses-navigation" className="wd list-group fs-5 rounded-0">
       {links.map((link) => {
         const linkPath = `/Kambaz/Courses/${cid}/${link}`;
-        const isActive = pathname === linkPath; 
+        const isActive = pathname.includes(linkPath);
         return (
           <Link key={link} to={linkPath} 
             className={`list-group-item ${isActive ? "active" : "text-danger"} border-0`}>
