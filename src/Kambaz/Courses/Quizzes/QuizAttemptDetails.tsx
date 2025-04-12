@@ -6,12 +6,23 @@ interface AttemptDetailsProps {
 }
 
 export default function QuizAttemptDetails({ attempt, questions }: AttemptDetailsProps) {
+  console.log(questions);
   return (
     <div className="mt-5">
       <h5>Attempt {attempt.attemptNumber} Answers</h5>
       {attempt.answers.map((ans: any, idx: number) => {
         const question = questions.find((q: any) => q._id === ans.question);
         const isCorrect = ans.correct;
+
+        if (!question) {
+            return (
+              <Card key={idx} className="mb-4 border">
+                <Card.Body>
+                  <div className="text-danger">This question has been deleted</div>
+                </Card.Body>
+              </Card>
+            );
+          }
 
         return (
           <Card key={idx} className="mb-4 border">
