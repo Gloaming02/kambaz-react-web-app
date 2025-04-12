@@ -113,7 +113,7 @@ export default function QuizPreview() {
         </div>
       )}
 
-      {currentUser?.role === "STUDENT" && remainingAttempts === 0 && (
+      {currentUser?.role === "STUDENT" && remainingAttempts !== null && remainingAttempts <= 0 && (
         <div className="text-center mt-4 text-danger">
           You have used all your attempts for this quiz.
         </div>
