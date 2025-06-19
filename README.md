@@ -1,4 +1,4 @@
-# Kambaz: Canvas-Inspired Learning Management System
+![image](https://github.com/user-attachments/assets/90010df5-e407-4f1f-b3e2-18efedd8213b)# Kambaz: Canvas-Inspired Learning Management System
 
 A full-featured web application that simulates the core experience of [Canvas LMS](https://www.instructure.com/canvas/), built using **React**, **TypeScript**, and **React-Bootstrap**.
 
@@ -8,7 +8,6 @@ A full-featured web application that simulates the core experience of [Canvas LM
 - **Backend (Render)**: [https://kambaz-node-server-app-quizzes.onrender.com/](https://kambaz-node-server-app-quizzes.onrender.com/)
 
 > ⚠️ Note: You must ensure the backend is live before using the frontend. Render may put backend into sleep when inactive, which may cause initial delay.
-
 
 ## 🎯 Features
 
@@ -40,7 +39,11 @@ A full-featured web application that simulates the core experience of [Canvas LM
 
 ## 📸 Screenshot
 
-> *You can insert a screenshot here if available.*
+![image](https://github.com/user-attachments/assets/50f303e9-4da0-44d6-b0dc-40ee1fdaffa6)
+![image](https://github.com/user-attachments/assets/1f3fad09-5163-4f93-bacf-629b3b502c94)
+![image](https://github.com/user-attachments/assets/dcc315ae-64ca-4dcf-95df-80e6ec6f4d6e)
+![image](https://github.com/user-attachments/assets/ca977cb7-7aa0-45bb-bf6c-919963f9ed2a)
+
 
 ## 🛠 How to Run
 
