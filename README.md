@@ -9,17 +9,20 @@ A full-featured web application that simulates the core experience of [Canvas LM
 
 > ⚠️ Note: You must ensure the backend is live before using the frontend. Render may put backend into sleep when inactive, which may cause initial delay.
 
-## 🎯 Features
+## 👨‍🏫 Instructor Capabilities
 
-- 🎓 **Course Management**: Create, edit, delete courses
-- 🧑‍🏫 **User Roles**: Instructor and student support
-- 📝 **Assignment & Quiz System**:
-  - Add/edit assignments and quizzes
-  - Support for multiple-choice, true/false, fill-in-the-blank questions
-  - Quiz attempts and detailed feedback
-- 👥 **Enrollment System**: Students can enroll/unenroll in courses
-- 📊 **Quiz Preview & Review**: Students can review their answers and see correctness (like Canvas)
-- 🔄 **RESTful API Integration**: All data operations connected to backend services
+- **Create and manage courses**
+- **Add/edit quizzes and assignments**
+- **Design quizzes with multiple question types**:
+  - Multiple Choice
+  - True / False
+  - Fill in the Blank
+
+## 👩‍🎓 Student Capabilities
+
+- **Enroll and unenroll** in available courses
+- **Take quizzes** assigned to enrolled courses
+- **Review quiz submissions** with feedback on correctness (Canvas-style)
 
 ## 🧱 Tech Stack
 
