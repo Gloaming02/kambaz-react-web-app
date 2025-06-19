@@ -1,3 +1,49 @@
+# Kambaz: Canvas-Inspired Learning Management System
+
+A full-featured web application that simulates the core experience of [Canvas LMS](https://www.instructure.com/canvas/), built using **React**, **TypeScript**, and **React-Bootstrap**.
+
+## 🎯 Features
+
+- 🎓 **Course Management**: Create, edit, delete courses
+- 🧑‍🏫 **User Roles**: Instructor and student support
+- 📝 **Assignment & Quiz System**:
+  - Add/edit assignments and quizzes
+  - Support for multiple-choice, true/false, fill-in-the-blank questions
+  - Quiz attempts and detailed feedback
+- 👥 **Enrollment System**: Students can enroll/unenroll in courses
+- 📊 **Quiz Preview & Review**: Students can review their answers and see correctness (like Canvas)
+- 🔄 **RESTful API Integration**: All data operations connected to backend services
+
+## 🧱 Tech Stack
+
+- **Frontend**: React, TypeScript, React-Bootstrap
+- **State Management**: Redux (initially), migrated to RESTful API calls
+- **Backend**: Node.js, Express, MongoDB (with Mongoose)
+- **Auth**: Session-based authentication
+- **Data Modeling**: Mongoose with population for many-to-many relationships
+
+## 🚀 Project Structure
+
+- `Users/`: Registration, login, and profile features
+- `Courses/`: Course list, detail view, editing, enrollments
+- `Assignments/`: Create/edit/view assignments
+- `Quizzes/`: Quiz editor, question types, attempt system
+- `QuizAttempt/`: Student submissions and review view
+
+## 📸 Screenshot
+
+> *You can insert a screenshot here if available.*
+
+## 🛠 How to Run
+
+```bash
+# Install dependencies
+npm install
+
+# Run frontend dev server
+npm start
+
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
