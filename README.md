@@ -2,7 +2,7 @@
 
 A full-featured web application that simulates the core experience of [Canvas LMS](https://www.instructure.com/canvas/), built using **React**, **TypeScript**, and **React-Bootstrap**.
 
-## 🌐 Live Demo
+## 🌐 Website Deployment on Netlify and Render
 
 - **Frontend (Netlify)**: [https://kambaz-react-web-app-quizzes.netlify.app/](https://kambaz-react-web-app-quizzes.netlify.app/)
 - **Backend (Render)**: [https://kambaz-node-server-app-quizzes.onrender.com/](https://kambaz-node-server-app-quizzes.onrender.com/)
